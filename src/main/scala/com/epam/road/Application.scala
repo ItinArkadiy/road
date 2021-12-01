@@ -13,7 +13,7 @@ object Application extends App {
   val roadsDF: DataFrame = spark.read
     .parquet("road_counters_day_agg")
   val roadRes: DataFrame = roadsDF
-    .groupBy(col("timestamp").alias("date"), col("roadId"), col("name"))
+    .groupBy(to_date(col("timestamp")).alias("date"), col("roadId"), col("name"))
     .agg(
       max(col("value")).alias("max_val"),
       min(col("value")).alias("min_val"),
